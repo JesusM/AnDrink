@@ -14,19 +14,22 @@ import android.widget.TextView;
 
 public class ViewDashboard extends Activity{
 	String estado ;
+	SharedPreferences settings = null;
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.dashboard);
-		SharedPreferences settings = getSharedPreferences("datos", MODE_PRIVATE);
+		settings = getSharedPreferences("datos", MODE_PRIVATE);
 		estado = settings.getString("Estado", "nuevo");
 		if(Integer.parseInt(settings.getString("veces jugadas", "0"))==0){
 			SharedPreferences.Editor edit = settings.edit();
 			edit.putString("veces jugadas", "1");
+			edit.commit();
 		}else{
 			int v_jug=Integer.parseInt(settings.getString("veces jugadas", "0"));
 			SharedPreferences.Editor edit = settings.edit();
 			edit.putString("veces jugadas", v_jug+1+"");
+			edit.commit();
 		}
 		if(estado.equals("nuevo")){
 			((TextView)findViewById(R.id.estadoJuego)).setText("Comenzar partida");
@@ -104,6 +107,7 @@ public class ViewDashboard extends Activity{
 				SharedPreferences.Editor editor = settings1.edit();
 
 				editor.putString("Estado","nuevo");
+				editor.commit();
 				finish();
 				
 			}});
