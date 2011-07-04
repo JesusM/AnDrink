@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="match_parent" android:layout_height="fill_parent"
+	android:orientation="vertical" android:background="@color/dkgray">
+	<LinearLayout android:orientation="horizontal"
+		android:layout_alignParentBottom="true" android:layout_width="fill_parent"
+		android:layout_height="wrap_content">
+		<Button android:layout_width="fill_parent" android:id="@+id/listo"
+			android:layout_marginLeft="15dip" android:layout_marginRight="25dip"
+			android:layout_weight="1.0" android:layout_height="wrap_content"
+			android:text="Listo" android:paddingLeft="8dip" android:textColor="@color/dkblue"
+			android:paddingRight="8dip" android:textStyle="bold"></Button>
+
+	</LinearLayout>
+	<LinearLayout android:layout_width="fill_parent"
+		android:layout_height="fill_parent" android:orientation="vertical"
+		android:gravity='center'>
+		<ImageView android:layout_width="195dip" android:id="@+id/photo_player"
+			android:layout_height="195dip" android:gravity="center"
+			android:src="@drawable/photo" android:background="@drawable/background_image"></ImageView>
+		<TextView android:id="@+id/nombre_player"
+
+			android:layout_marginTop="25dip" android:layout_width="wrap_content"
+			android:text="Jugador" android:textColor="@color/white"
+			android:layout_gravity="center" android:layout_height="wrap_content"
+			android:textSize="25dip"></TextView>
+	</LinearLayout>
+</RelativeLayout>

@@ -1,0 +1,18 @@
+<LinearLayout android:orientation="vertical"
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent" android:layout_height="wrap_content"
+	android:padding="10dp">
+	<EditText android:id="@+id/new_player_name"
+		android:layout_marginLeft="15dip" android:layout_marginRight="15dip"
+		android:layout_gravity="center" android:layout_width="wrap_content"
+		android:paddingLeft="15dip" android:paddingRight="15dip"
+		android:layout_height="wrap_content" android:hint='nombre del jugador'
+		android:paddingTop="5dip" android:paddingBottom="5dip"
+		android:gravity="center" android:layout_marginBottom="6dip">
+	</EditText>
+
+	<Button android:id='@+id/Aceptar' android:layout_width='wrap_content'
+		android:paddingLeft="15dip" android:paddingRight="15dip" 
+		android:layout_height='wrap_content' android:text='Aceptar'
+		android:layout_gravity="center" android:layout_weight='1.0'></Button>
+</LinearLayout>

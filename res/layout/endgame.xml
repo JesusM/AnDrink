@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:orientation="vertical" android:layout_width="match_parent"
+	android:layout_height="match_parent" android:background="@color/dkgray">
+	<LinearLayout android:orientation="horizontal"
+		android:layout_alignParentBottom="true" android:layout_width="fill_parent"
+		android:layout_height="wrap_content">
+		<Button android:layout_width="fill_parent" android:id="@+id/KO"
+			android:layout_gravity="center" android:layout_weight="1.0"
+			android:layout_height="wrap_content" android:text="Empezar de nuevo"
+			android:paddingLeft="8dip" android:textColor="@color/black"
+			android:paddingRight="8dip"></Button>
+		<Button android:layout_width="fill_parent" android:id="@+id/listo"
+			android:layout_weight="1.0" android:layout_height="wrap_content"
+			android:layout_gravity="center" android:text="Elegir nuevos jugadores"
+			android:paddingLeft="8dip" android:textColor="@color/black"
+			android:paddingRight="8dip"></Button>
+	</LinearLayout>
+	<LinearLayout android:layout_width="fill_parent"
+		android:layout_marginLeft="10dip" android:layout_height="wrap_content"
+		android:layout_alignParentTop="true" android:id="@+id/titulo">
+		<TextView android:layout_marginTop="10dip" android:textStyle="bold"
+			android:layout_width="fill_parent" android:text="Fin de la partida"
+			android:textColor="@color/white" android:gravity="center_horizontal"
+			android:layout_height="wrap_content" android:textSize="15dip"></TextView>
+	</LinearLayout>
+	<LinearLayout android:layout_width="fill_parent"
+		android:layout_marginLeft="10dip" android:layout_height="wrap_content" android:layout_below="@id/titulo">
+		<TextView android:layout_marginTop="10dip" android:textStyle="bold" android:id="@+id/nombreGanador"
+			android:layout_width="fill_parent" android:text="Ganador:"
+			android:textColor="@color/white" android:gravity="center_horizontal"
+			android:layout_height="wrap_content" android:textSize="15dip"></TextView>
+	</LinearLayout>
+	<LinearLayout android:layout_width="fill_parent"
+		android:layout_height="fill_parent" android:orientation="vertical"
+		android:gravity='center'>
+		<ImageView android:layout_width="195dip" android:id="@+id/photo_player2"
+			android:layout_height="195dip" android:layout_gravity="center"
+			android:src="@drawable/photo"></ImageView>
+		<TextView android:id="@+id/nombre_player"
+			android:layout_marginTop="25dip" android:layout_width="wrap_content"
+			android:text="Jugador" android:textColor="@color/white"
+			android:layout_gravity="center" android:layout_height="wrap_content"
+			android:textSize="25dip"></TextView>
+	</LinearLayout>
+
+</RelativeLayout>

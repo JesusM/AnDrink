@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout android:layout_width="fill_parent"
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_height="fill_parent" android:orientation="vertical"
+	android:background="@color/gray">
+	<!--
+		<LinearLayout android:layout_alignParentBottom="true"
+		android:layout_width="match_parent" android:id="@+id/a"
+		android:layout_height="wrap_content" android:orientation="vertical">
+		<Button android:layout_width="wrap_content" android:id="@+id/godrink"
+		android:paddingLeft="25dip" android:paddingRight="25dip"
+		android:layout_height="wrap_content" android:text="A beber"
+		android:layout_gravity="center" android:gravity="center"
+		android:textColor="@color/dkblue" android:textStyle="bold"></Button>
+		</LinearLayout>
+	-->
+	<RelativeLayout android:layout_width="match_parent"
+		android:id="@+id/tlistado" android:layout_height="wrap_content"
+		android:background="@color/dkgray">
+		<TextView android:layout_width="wrap_content" android:id="@+id/titulolistado"
+			android:layout_gravity="center" android:layout_marginLeft="5dip"
+			android:layout_height="wrap_content" android:text="Listado de jugadores"
+			android:layout_marginTop="15dip" android:textSize="18dip"
+			android:layout_marginBottom="5dip" android:textColor="@color/white"
+			android:layout_centerInParent="false" android:layout_centerVertical="true"></TextView>
+		<!-- android:textStyle="bold" -->
+		<ImageView android:layout_alignParentRight="true"
+			android:id="@+id/godrink" android:layout_width="wrap_content"
+			android:layout_height="wrap_content" android:src="@drawable/checkin_icon"
+			android:padding="9dip" />
+		
+	</RelativeLayout>
+
+	<LinearLayout android:layout_width="fill_parent"
+		android:layout_height="fill_parent" android:background="@color/gray">
+		<ListView android:id="@+id/listadoinicial"
+			android:layout_marginRight="5dip" android:layout_marginLeft="5dip"
+			android:layout_gravity="center_vertical" android:layout_width="match_parent"
+			android:layout_height="wrap_content" android:orientation="vertical">
+		</ListView>
+	</LinearLayout>
+
+
+</LinearLayout>
+
+

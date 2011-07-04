@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout android:layout_width="fill_parent"
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_height="fill_parent" android:orientation="vertical"
+	android:background="@color/gray">
+	<!--
+		<LinearLayout android:layout_alignParentBottom="true"
+		android:layout_width="match_parent" android:id="@+id/a"
+		android:layout_height="wrap_content" android:orientation="vertical">
+		<Button android:layout_width="wrap_content" android:id="@+id/godrink"
+		android:paddingLeft="25dip" android:paddingRight="25dip"
+		android:layout_height="wrap_content" android:text="A beber"
+		android:layout_gravity="center" android:gravity="center"
+		android:textColor="@color/dkblue" android:textStyle="bold"></Button>
+		</LinearLayout>
+	-->
+	<RelativeLayout android:layout_width="match_parent"
+		android:id="@+id/tlistado" android:layout_height="wrap_content"
+		android:background="@color/dkgray">
+		<TextView android:layout_width="wrap_content" android:id="@+id/titulolistado"
+			android:layout_gravity="center" android:layout_marginLeft="5dip"
+			android:layout_height="wrap_content" android:text="Nº jugadores"
+			android:layout_marginTop="15dip" android:textSize="18dip"
+			android:layout_marginBottom="5dip" android:textColor="@color/white"
+			android:layout_centerInParent="false" android:layout_centerVertical="true"
+			android:layout_marginRight="7dip"></TextView>
+		<!-- android:textStyle="bold" -->
+
+		<ImageView android:layout_alignParentRight="true"
+			android:id="@+id/pregodrink" android:layout_width="wrap_content"
+			android:layout_height="wrap_content" android:src="@drawable/forward"
+			android:padding="9dip" />
+		<EditText android:layout_toLeftOf="@id/godrink" android:id="@+id/num_jug"
+			android:layout_toRightOf="@id/titulolistado" android:layout_width="wrap_content"
+			android:layout_height="wrap_content" android:hint="nº jugadores"
+			android:gravity="center" android:layout_centerVertical="true" />
+
+	</RelativeLayout>
+
+
+
+
+</LinearLayout>

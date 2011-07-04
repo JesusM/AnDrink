@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout android:orientation="vertical"
+	android:id="@+id/lay_wrapper" xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent" android:layout_height="fill_parent"
+	android:background="@color/white">
+	<RelativeLayout android:id="@+id/lay_action_bottom"
+		android:layout_alignParentBottom="true" android:layout_width="fill_parent"
+		android:layout_height="wrap_content" android:background="@color/dkgray">
+		<TextView android:id="@+id/label_header"
+			android:layout_width="fill_parent" android:layout_height="50px"
+			android:text="Notifications" android:textColor="@color/white"
+			android:gravity="center" android:layout_gravity="center_vertical" />
+
+	</RelativeLayout>
+	<RelativeLayout android:id="@+id/lay_action"
+		android:layout_alignParentTop="true" android:layout_width="fill_parent"
+		android:layout_height="wrap_content" android:background="@color/dkgray">
+		<TextView android:id="@+id/label_header"
+			android:layout_width="wrap_content" android:layout_height="50px"
+			android:text="Andrink" android:textColor="@color/white"
+			android:textSize="25sp" android:paddingLeft="10px" android:gravity="center_vertical"
+			android:layout_gravity="center_vertical" />
+
+	</RelativeLayout>
+	<ImageView android:layout_width="fill_parent"
+		android:layout_below="@id/lay_action" android:layout_gravity="center"
+		android:layout_height="wrap_content" android:id="@+id/logo"
+		android:src="@drawable/home_screen_title" android:layout_marginTop="30dip" />
+	<ScrollView android:id="@+id/lay_main" android:layout_below="@id/logo"
+		android:layout_above="@id/lay_action_bottom" android:layout_width="fill_parent"
+		android:layout_height="fill_parent" android:layout_marginTop="25px">
+		<LinearLayout android:orientation="vertical"
+			android:layout_width="fill_parent" android:layout_height="fill_parent"
+			android:layout_gravity="center">
+			<LinearLayout android:layout_width="fill_parent"
+				android:layout_marginBottom="15dip" android:layout_height="wrap_content">
+				<LinearLayout android:layout_width="fill_parent"
+					android:layout_weight="1.0" android:layout_height="wrap_content"
+					android:orientation="vertical" android:id="@+id/button1">
+					<ImageView android:layout_width="wrap_content"
+						android:src="@drawable/iconlarge_share" android:layout_gravity="center"
+						android:layout_height="75dip" />
+					<!-- android:drawableTop="@drawable/ button1"  -->
+					<TextView android:layout_width="fill_parent" android:id="@+id/estadoJuego"
+						android:layout_marginTop="8dip" android:layout_height="wrap_content"
+						android:text="Comenzar juego" android:textColor="@color/black"
+						android:gravity="center" />
+				</LinearLayout>
+				<LinearLayout android:layout_width="fill_parent"
+					android:layout_weight="1.0" android:layout_height="wrap_content"
+					android:orientation="vertical" android:id="@+id/button2">
+					<ImageView android:layout_width="wrap_content"
+						android:layout_gravity="center" android:layout_height="75dip"
+						android:src="@drawable/notifications_ic_type_stream_unread" />
+					<!-- android:drawableTop="@drawable/ button1"  -->
+					<TextView android:layout_width="fill_parent"
+						android:layout_marginTop="8dip" android:layout_height="wrap_content"
+						android:text="Estadísticas" android:textColor="@color/black"
+						android:gravity="center" />
+				</LinearLayout>
+			</LinearLayout>
+			<LinearLayout android:layout_width="fill_parent" android:id="@+id/button3"
+				android:layout_marginBottom="15dip" android:layout_height="wrap_content">
+				<LinearLayout android:layout_width="fill_parent"
+					android:layout_weight="1.0" android:layout_height="wrap_content"
+					android:orientation="vertical" 
+					android:layout_gravity="center">
+					<ImageView android:layout_width="wrap_content"
+						android:src="@drawable/info"
+						android:layout_gravity="center" android:layout_height="75dip" />
+					<!-- android:drawableTop="@drawable/ button1"  -->
+					<TextView android:layout_width="fill_parent"
+						android:layout_marginTop="8dip" android:layout_height="wrap_content"
+						android:text="Acerca de" android:textColor="@color/black"
+						android:gravity="center" />
+				</LinearLayout>
+				<LinearLayout android:layout_width="fill_parent"
+					android:layout_weight="1.0" android:layout_height="wrap_content"
+					android:orientation="vertical" android:id="@+id/button4">
+					<ImageView android:layout_width="wrap_content"
+						android:layout_gravity="center" android:layout_height="75dip"
+						android:src="@drawable/menu_quit" />
+					<!-- android:drawableTop="@drawable/ button1"  -->
+					<TextView android:layout_width="fill_parent"
+						android:layout_marginTop="8dip" android:layout_height="wrap_content"
+						android:text="Salir y terminar partida" android:textColor="@color/black"
+						android:gravity="center" />
+				</LinearLayout>
+			</LinearLayout>
+		</LinearLayout>
+	</ScrollView>
+</RelativeLayout>
