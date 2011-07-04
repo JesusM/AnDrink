@@ -34,7 +34,8 @@
 		<EditText android:layout_toLeftOf="@id/godrink" android:id="@+id/num_jug"
 			android:layout_toRightOf="@id/titulolistado" android:layout_width="wrap_content"
 			android:layout_height="wrap_content" android:hint="nº jugadores"
-			android:gravity="center" android:layout_centerVertical="true" />
+			android:gravity="center" android:layout_centerVertical="true"
+			android:numeric="integer" />
 
 	</RelativeLayout>
 

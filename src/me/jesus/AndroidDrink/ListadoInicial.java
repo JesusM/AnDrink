@@ -73,7 +73,7 @@ import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.AdapterView.OnItemSelectedListener;
 
 public class ListadoInicial extends Activity {
-	private boolean modo_borrar = false;
+	boolean show_inst = true;
 	final ActionItem first = new ActionItem();
 	final ActionItem second = new ActionItem();
 	final ActionItem third = new ActionItem();
@@ -92,33 +92,32 @@ public class ListadoInicial extends Activity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
-		//setContentView(R.layout.listadoinicial);
+		// setContentView(R.layout.listadoinicial);
 		setContentView(R.layout.pre_listado_inicial);
-		findViewById(R.id.pregodrink).setOnClickListener(new OnClickListener(){
-			
+		findViewById(R.id.pregodrink).setOnClickListener(new OnClickListener() {
+
 			@Override
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
-				if(Integer.parseInt(((EditText)findViewById(R.id.num_jug)).getText().toString())>0){
-					SharedPreferences settings = getSharedPreferences(
-							"datos", MODE_PRIVATE);
+				if (Integer.parseInt(((EditText) findViewById(R.id.num_jug))
+						.getText().toString()) > 0) {
+					SharedPreferences settings = getSharedPreferences("datos",
+							MODE_PRIVATE);
 					SharedPreferences.Editor editor = settings.edit();
 
 					editor.putString("NJugadores",
-							((EditText) findViewById(R.id.num_jug))
-									.getText().toString());
+							((EditText) findViewById(R.id.num_jug)).getText()
+									.toString());
 					editor.commit();
 					setContentView(R.layout.listadoinicial);
 					cargarInterfazListado();
 				}
-			}});
-		
-		
+			}
+		});
 
 	}
-	
-	
-	public void cargarInterfazListado(){
+
+	public void cargarInterfazListado() {
 		IniciarQuickActions();
 
 		if (Datos.jugadores == null)
@@ -127,7 +126,6 @@ public class ListadoInicial extends Activity {
 		((ListView) findViewById(R.id.listadoinicial))
 				.setAdapter(new ListadoAdapter(this));
 
-		
 		ImageView b = (ImageView) this.findViewById(R.id.godrink);
 		b.setOnClickListener(new OnClickListener() {
 
@@ -135,10 +133,23 @@ public class ListadoInicial extends Activity {
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
 
-				if (num_jug == 0) {
-					num_jug++;
-					showInstrucciones(arg0);
-					
+				SharedPreferences settings = getSharedPreferences("datos",
+						MODE_PRIVATE);
+				num_jug = Integer.parseInt(settings.getString("veces jugadas",
+						"1"));
+				if (num_jug == 1) {
+					if (show_inst == true) {
+						showInstrucciones(arg0);
+						show_inst = false;
+					} else {
+						for (int i = 0; i < Datos.jugadores.size(); i++) {
+							insertarJugador(Datos.jugadores.get(i));
+						}
+						startActivity(new Intent(ListadoInicial.this,
+								DrinkView.class));
+						finish();
+					}
+
 				} else {
 					for (int i = 0; i < Datos.jugadores.size(); i++) {
 						insertarJugador(Datos.jugadores.get(i));
@@ -150,8 +161,6 @@ public class ListadoInicial extends Activity {
 
 			}
 		});
-
-		
 
 		((ListView) findViewById(R.id.listadoinicial))
 				.setOnItemClickListener(new OnItemClickListener() {
@@ -201,7 +210,7 @@ public class ListadoInicial extends Activity {
 		final QuickAction qa = new QuickAction(v);
 		qa.addActionItem(instruction);
 		qa.show(false);
-		
+
 		new CountDownTimer(2000, 1000) {
 
 			public void onTick(long millisUntilFinished) {
@@ -211,7 +220,6 @@ public class ListadoInicial extends Activity {
 				qa.dismiss();
 			}
 		}.start();
-		
 
 	}
 
@@ -246,8 +254,9 @@ public class ListadoInicial extends Activity {
 															.getText()
 															.toString());
 									((ListView) findViewById(R.id.listadoinicial))
-									.setAdapter(new ListadoAdapter(ListadoInicial.this));
-									
+											.setAdapter(new ListadoAdapter(
+													ListadoInicial.this));
+
 									dialogo.dismiss();
 									qa.dismiss();
 								} else {
@@ -271,7 +280,8 @@ public class ListadoInicial extends Activity {
 				doTakePhotoAction();
 				qa.dismiss();
 
-				//startActivity(new Intent(ListadoInicial.this, PlayerView.class));
+				// startActivity(new Intent(ListadoInicial.this,
+				// PlayerView.class));
 			}
 		});
 
@@ -294,7 +304,7 @@ public class ListadoInicial extends Activity {
 		Datos.jugadores.remove(this.indice_lista);
 		((ListView) findViewById(R.id.listadoinicial))
 				.setAdapter(new ListadoAdapter(ListadoInicial.this));
-		//((Button) findViewById(R.id.godrink)).setText("A beber");
+		// ((Button) findViewById(R.id.godrink)).setText("A beber");
 	}
 
 	private void crearJugadores() {

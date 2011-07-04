@@ -20,6 +20,14 @@ public class ViewDashboard extends Activity{
 		setContentView(R.layout.dashboard);
 		SharedPreferences settings = getSharedPreferences("datos", MODE_PRIVATE);
 		estado = settings.getString("Estado", "nuevo");
+		if(Integer.parseInt(settings.getString("veces jugadas", "0"))==0){
+			SharedPreferences.Editor edit = settings.edit();
+			edit.putString("veces jugadas", "1");
+		}else{
+			int v_jug=Integer.parseInt(settings.getString("veces jugadas", "0"));
+			SharedPreferences.Editor edit = settings.edit();
+			edit.putString("veces jugadas", v_jug+1+"");
+		}
 		if(estado.equals("nuevo")){
 			((TextView)findViewById(R.id.estadoJuego)).setText("Comenzar partida");
 			((TextView)findViewById(R.id.label_header)).setText("Ninguna partida en juego");
@@ -35,6 +43,8 @@ public class ViewDashboard extends Activity{
 			String n_jug = settings2.getString("Njugadores", "-1");
 			if(!n_jug.equals("-1")){
 				((TextView)findViewById(R.id.label_header)).setText(n_jug+" jugando actualmente");
+			}else{
+				((TextView)findViewById(R.id.label_header)).setText("Hubo un problema en la anterior partida, por favor, salga y vuelva a comenzar");
 			}
 			
 		}
