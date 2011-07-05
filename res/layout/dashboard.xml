@@ -15,18 +15,26 @@
 	<RelativeLayout android:id="@+id/lay_action"
 		android:layout_alignParentTop="true" android:layout_width="fill_parent"
 		android:layout_height="wrap_content" android:background="@color/dkgray">
-		<TextView android:id="@+id/label_header"
+
+
+
+		<!--
+			<TextView android:id="@+id/label_header"
 			android:layout_width="wrap_content" android:layout_height="50px"
 			android:text="Andrink" android:textColor="@color/white"
-			android:textSize="25sp" android:paddingLeft="10px" android:gravity="center_vertical"
+			android:textSize="25sp" android:paddingLeft="10px"
+			android:gravity="center_vertical"
 			android:layout_gravity="center_vertical" />
+		-->
+		<ImageView android:id="@+id/label_header"
+			android:layout_width="wrap_content" android:paddingTop="3dip" android:paddingBottom="3dip" android:layout_height="50px"
+			android:layout_gravity="center_vertical" android:src="@drawable/logo_small" />
 
 	</RelativeLayout>
-	<ImageView android:layout_width="fill_parent" 
+	<ImageView android:layout_width="fill_parent"
 		android:layout_below="@id/lay_action" android:layout_gravity="center"
 		android:layout_height="wrap_content" android:id="@+id/logo"
-		android:layout_marginLeft="20dip" android:layout_marginRight="20dip"
-		android:src="@drawable/logo" android:layout_marginTop="30dip" />
+		android:src="@drawable/logo_compuesto" android:layout_marginTop="30dip" />
 	<ScrollView android:id="@+id/lay_main" android:layout_below="@id/logo"
 		android:layout_above="@id/lay_action_bottom" android:layout_width="fill_parent"
 		android:layout_height="fill_parent" android:layout_marginTop="25px">

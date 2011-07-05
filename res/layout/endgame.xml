@@ -1,10 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	android:orientation="vertical" android:layout_width="match_parent"
-	android:layout_height="match_parent" android:background="@color/dkgray">
+	android:layout_height="match_parent" android:background="@color/gray">
+	<RelativeLayout android:id="@+id/lay_action"
+		android:layout_alignParentTop="true" android:layout_width="fill_parent"
+		android:layout_height="wrap_content" android:background="@color/dkgray">
+		<ImageView android:id="@+id/label_header"
+			android:layout_alignParentLeft="true" android:layout_width="wrap_content"
+			android:paddingTop="3dip" android:paddingBottom="3dip"
+			android:layout_height="50px" android:layout_gravity="center_vertical"
+			android:src="@drawable/logo_small" /> 
+		<TextView android:layout_width="wrap_content" android:id="@+id/label_header2"
+			android:layout_height="50px" android:layout_alignParentRight="true"
+			android:text="Fin de partida" android:textColor="@color/lightgray"
+			android:paddingRight="10px" android:gravity="center_vertical"
+			android:layout_gravity="center_vertical" /> 
+		<TextView android:layout_toLeftOf="@id/label_header2"
+			android:layout_marginRight="7dip" android:layout_height="50px"
+			android:layout_width="1dip" android:background="@color/gray" />
+ 
+	</RelativeLayout>
+
 	<LinearLayout android:orientation="horizontal"
 		android:layout_alignParentBottom="true" android:layout_width="fill_parent"
-		android:layout_height="wrap_content">
+		android:layout_height="wrap_content" android:id="@+id/botones">
 		<Button android:layout_width="fill_parent" android:id="@+id/KO"
 			android:layout_gravity="center" android:layout_weight="1.0"
 			android:layout_height="wrap_content" android:text="Empezar de nuevo"
@@ -17,23 +36,15 @@
 			android:paddingRight="8dip"></Button>
 	</LinearLayout>
 	<LinearLayout android:layout_width="fill_parent"
-		android:layout_marginLeft="10dip" android:layout_height="wrap_content"
-		android:layout_alignParentTop="true" android:id="@+id/titulo">
+		android:id="@+id/imagen" android:layout_height="fill_parent"
+		android:orientation="vertical" android:gravity='center'
+		android:layout_above="@id/botones" android:layout_below="@id/lay_action">
+
 		<TextView android:layout_marginTop="10dip" android:textStyle="bold"
-			android:layout_width="fill_parent" android:text="Fin de la partida"
-			android:textColor="@color/white" android:gravity="center_horizontal"
-			android:layout_height="wrap_content" android:textSize="15dip"></TextView>
-	</LinearLayout>
-	<LinearLayout android:layout_width="fill_parent"
-		android:layout_marginLeft="10dip" android:layout_height="wrap_content" android:layout_below="@id/titulo">
-		<TextView android:layout_marginTop="10dip" android:textStyle="bold" android:id="@+id/nombreGanador"
-			android:layout_width="fill_parent" android:text="Ganador:"
-			android:textColor="@color/white" android:gravity="center_horizontal"
-			android:layout_height="wrap_content" android:textSize="15dip"></TextView>
-	</LinearLayout>
-	<LinearLayout android:layout_width="fill_parent"
-		android:layout_height="fill_parent" android:orientation="vertical"
-		android:gravity='center'>
+			android:id="@+id/nombreGanador" android:layout_width="fill_parent"
+			android:text="Ganador:" android:textColor="@color/white"
+			android:gravity="center_horizontal" android:layout_height="wrap_content"
+			android:textSize="15dip"></TextView>
 		<ImageView android:layout_width="195dip" android:id="@+id/photo_player2"
 			android:layout_height="195dip" android:layout_gravity="center"
 			android:src="@drawable/photo"></ImageView>
@@ -43,5 +54,8 @@
 			android:layout_gravity="center" android:layout_height="wrap_content"
 			android:textSize="25dip"></TextView>
 	</LinearLayout>
+
+
+
 
 </RelativeLayout>
