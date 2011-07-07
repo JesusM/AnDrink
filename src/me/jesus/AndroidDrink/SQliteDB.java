@@ -59,6 +59,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.database.sqlite.SQLiteQueryBuilder;
+import android.widget.Toast;
 
 public class SQliteDB {
 	/** Called when the activity is first created. */
@@ -70,6 +71,7 @@ public class SQliteDB {
 	public static final String VECES_BEBIDAS = "vecesBebidas";
 	public final String TABLE_NAME = "estadisticas";
 	private final BBDD mDatabase;
+	private Context mcontext;
 
 	/**
 	 * Constructor
@@ -78,6 +80,7 @@ public class SQliteDB {
 	 *            The Context within which to work, used to create the DB
 	 */
 	public SQliteDB(Context context) {
+		this.mcontext = context;
 		mDatabase = new BBDD(context);
 	}
 
@@ -138,8 +141,6 @@ public class SQliteDB {
 		builder.setTables(TABLE_NAME);
 		Cursor cursor = mDatabase.getReadableDatabase().query(TABLE_NAME,
 				columns, selection, selectionArgs, null, null, null);
-		
-		
 
 		if (cursor == null) {
 			return null;
@@ -149,8 +150,7 @@ public class SQliteDB {
 		}
 		return cursor;
 	}
-	
-	
+
 	/**
 	 * Performs a database query.
 	 * 
@@ -162,25 +162,33 @@ public class SQliteDB {
 	 *            The columns to return
 	 * @return A Cursor over all rows matching the query
 	 */
-	public Cursor query(String nombreJ, 
-			String [] columns) {
+	public Cursor query(String nombreJ, String[] columns) {
 		/*
 		 * The SQLiteBuilder provides a map for all possible columns requested
 		 * to actual columns in the database, creating a simple column alias
 		 * mechanism by which the ContentProvider does not need to know the real
 		 * column names
 		 */
-		String selection = SQliteDB.NOMBRE_JUGADOR+" like "+ " '"+nombreJ+"';";
-		Cursor cursor = mDatabase.getReadableDatabase().query(TABLE_NAME, columns, selection, null, null, null, null);
-		
-		
-
-		if (cursor == null) {
-			return null;
-		} else if (!cursor.moveToFirst()) {
-			cursor.close();
-			return cursor;
+		String selection;
+		if (!nombreJ.equals("*")) {
+			selection = SQliteDB.NOMBRE_JUGADOR + " like " + " '" + nombreJ
+					+ "';";
+		} else {
+			selection = SQliteDB.NOMBRE_JUGADOR;
 		}
+		try {
+			Cursor cursor = mDatabase.getReadableDatabase().query(TABLE_NAME,
+					columns, selection, null, null, null, null);
+			if (cursor == null) {
+				return null;
+			} else if (!cursor.moveToFirst()) {
+				cursor.close();
+				return cursor;
+			}
+		} catch (Exception e) {
+			Toast.makeText(mcontext, e.getMessage(), Toast.LENGTH_LONG).show();
+		}
+
 		return null;
 	}
 
@@ -194,7 +202,8 @@ public class SQliteDB {
 		public long insert(String tableName, Object object,
 				ContentValues initialValues) {
 			// TODO Auto-generated method stub
-			return mSQliteDB.insert(tableName, null, initialValues);
+			return this.getWritableDatabase().insert(tableName, null,
+					initialValues);
 		}
 
 		@Override
@@ -229,11 +238,12 @@ public class SQliteDB {
 			initialValues.put(VECES_GANADAS, j);
 			initialValues.put(VECES_KO, k);
 			initialValues.put(VECES_BEBIDAS, vecesBebidas);
-			return mSQliteDB.insert(TABLE_NAME, null, initialValues);
+			return this.getWritableDatabase().insert(TABLE_NAME, null,
+					initialValues);
 		}
 
 		public Cursor searchJugador(String nombre) {
-			boolean open = mSQliteDB.isOpen();
+
 			String selection = NOMBRE_JUGADOR + " = ?";
 			String[] selectionArgs = new String[] { nombre };
 			SQLiteQueryBuilder builder = new SQLiteQueryBuilder();
@@ -245,8 +255,8 @@ public class SQliteDB {
 			 * selectionArgs, null, null, null);
 			 */
 
-			Cursor cursor = mSQliteDB.query(TABLE_NAME, columns, selection,
-					selectionArgs, null, null, null);
+			Cursor cursor = this.getReadableDatabase().query(TABLE_NAME,
+					columns, selection, selectionArgs, null, null, null);
 
 			if (cursor == null) {
 				return null;
@@ -260,8 +270,8 @@ public class SQliteDB {
 
 		protected int actualizarJugador(String nombre, ContentValues cv) {
 			// TODO Auto-generated method stub
-			return mSQliteDB.update("estadisticas", cv, SQliteDB.NOMBRE_JUGADOR
-					+ "=?", new String[] { nombre });
+			return this.getWritableDatabase().update("estadisticas", cv,
+					SQliteDB.NOMBRE_JUGADOR + "=?", new String[] { nombre });
 		}
 	}
 

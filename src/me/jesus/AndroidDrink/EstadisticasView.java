@@ -86,14 +86,16 @@ public class EstadisticasView extends Activity {
 			
 			sqlitedb = new SQliteDB(EstadisticasView.this);
 			
-			String selection = sqlitedb.NOMBRE_JUGADOR + " = ?";
-			String[] selectionArgs = new String[] { "*" };
+			//String selection = sqlitedb.NOMBRE_JUGADOR + " = ?";
+			String selection = "*";
 			
-			String[] columns = new String[] { sqlitedb.NOMBRE_JUGADOR };
-			Cursor c = sqlitedb.query(selection, selectionArgs, columns);
+			String[] columns = new String[] { sqlitedb.NOMBRE_JUGADOR,
+					sqlitedb.VECES_JUGADAS, sqlitedb.VECES_GANADAS,
+					sqlitedb.VECES_KO, sqlitedb.VECES_BEBIDAS };
+			cursor = sqlitedb.query(selection, columns);
 
 			try {
-				cursor = sqlitedb.query(selection, columns, selectionArgs);
+				//cursor = sqlitedb.query(selection, columns, selectionArgs);
 				if (cursor != null) {
 					cursor.moveToFirst();
 				}
