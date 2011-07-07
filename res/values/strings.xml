@@ -2,4 +2,6 @@
 <resources>
     <string name="hello">Hello World, Inicio!</string>
     <string name="app_name">AndroidDrink</string>
+    <string name="app_label">buscar</string>
+    <string name="search_hint">Buscar jugadores</string>
 </resources>

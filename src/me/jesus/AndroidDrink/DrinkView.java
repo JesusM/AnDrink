@@ -27,7 +27,6 @@ package me.jesus.AndroidDrink;
 
 import java.util.Random;
 
-
 import android.app.Activity;
 import android.content.ContentValues;
 import android.content.Intent;
@@ -105,11 +104,11 @@ public class DrinkView extends Activity {
 							.getImage());
 			((TextView) findViewById(R.id.nombre_player)).setText("Ganador: "
 					+ Datos.jugadores.get(indice_ganador).getNombre());
-			SharedPreferences settings1 = getSharedPreferences(
-					"datos", MODE_PRIVATE);
+			SharedPreferences settings1 = getSharedPreferences("datos",
+					MODE_PRIVATE);
 			SharedPreferences.Editor editor = settings1.edit();
 
-			editor.putString("Estado","nuevo");
+			editor.putString("Estado", "nuevo");
 			editor.commit();
 			for (int i = 0; i < Datos.jugadores.size(); i++) {
 				if (i == indice_ganador) {
@@ -157,58 +156,57 @@ public class DrinkView extends Activity {
 
 	private void actualizarJugador(Jugador j) {
 		SQliteDB sqlitedb = new SQliteDB(this);
-		SQLiteDatabase db = sqlitedb.getReadableDatabase();
+
 		String id = j.getNombre();
-		String sentenciaSelect = "SELECT  nombreJugador as name, vecesJugadas as vecesjugadas, vecesGanadas as vecesganadas, vecesKO"
-				+ " as vecesko,vecesBebidas as vecesbebidas FROM estadisticas where nombreJugador like '"
-				+ id + "';";
+
 		int vecesbebidas, vecesJugadas, vecesKO, vecesGanadas;
 		try {
-			Cursor c = db.rawQuery(sentenciaSelect, null);
-			int a = c.getCount();
-			if (a > 0) {
-				c.moveToFirst();
+			ContentValues cv = new ContentValues();
+			Cursor c = sqlitedb.getJugador(j.getNombre());
+			
+			if (c != null) {
+				vecesGanadas = c.getColumnIndex(c.getColumnName(2));
+				vecesKO = c.getColumnIndex(c.getColumnName(3));
+				int a = c.getCount();
+				if (a > 0) {
+					c.moveToFirst();
 
-				vecesbebidas = Integer.parseInt(c.getString(c
-						.getColumnIndex("vecesbebidas")));
-				vecesJugadas = Integer.parseInt(c.getString(c
-						.getColumnIndex("vecesjugadas")));
-				vecesKO = Integer.parseInt(c.getString(c
-						.getColumnIndex("vecesko")));
-				vecesGanadas = Integer.parseInt(c.getString(c
-						.getColumnIndex("vecesganadas")));
-				db.close();
-				db = sqlitedb.getWritableDatabase();
-				ContentValues cv = new ContentValues();
-				cv.put(SQliteDB.NOMBRE_JUGADOR, j.getNombre());
+					
+					cv.put(SQliteDB.NOMBRE_JUGADOR, j.getNombre());
 
-				/*
-				 * cv.put(SQliteDB.VECES_JUGADAS, String .valueOf((vecesJugadas
-				 * + 1)));
-				 */
-				if (j.isGanador() == true) {
-					cv.put(SQliteDB.VECES_GANADAS, String
-							.valueOf(vecesGanadas + 1));
+					/*
+					 * cv.put(SQliteDB.VECES_JUGADAS, String
+					 * .valueOf((vecesJugadas + 1)));
+					 */
+					if (j.isGanador() == true) {
+						cv.put(SQliteDB.VECES_GANADAS, String
+								.valueOf(vecesGanadas + 1));
+					} else {
+						cv.put(SQliteDB.VECES_BEBIDAS, String.valueOf((j
+								.getNbebe())));
+					}
+					if (j.isKO()) {
+						cv.put(SQliteDB.VECES_KO, String.valueOf(vecesKO + 1));
+					}
+					sqlitedb.actualizarJugador(j.getNombre(), cv);
 				} else {
-					cv.put(SQliteDB.VECES_BEBIDAS, String
-							.valueOf((j.getNbebe())));
+					int ganador = 0, ko = 0;
+					if (j.isGanador()) {
+						ganador = 1;
+					}
+					if (j.isKO()) {
+						ko = 1;
+					}
+					cv.put(sqlitedb.NOMBRE_JUGADOR, j.getNombre());
+					cv.put(sqlitedb.VECES_JUGADAS	, 1+"");
+					cv.put(sqlitedb.VECES_GANADAS, 0+"");
+					cv.put(sqlitedb.VECES_KO, 0+"");
+					cv.put(sqlitedb.VECES_BEBIDAS, j.getNbebe()+"");
+					sqlitedb.insertarJugador(j.getNombre(),cv);
+					/*db.execSQL("INSERT into estadisticas values ('"
+							+ j.getNombre() + "' , '" + 1 + "' , '" + ganador
+							+ "' , '" + ko + "' , '" + j.getNbebe() + "');");*/
 				}
-				if (j.isKO()) {
-					cv.put(SQliteDB.VECES_KO, String.valueOf(vecesKO + 1));
-				}
-				db.update("estadisticas", cv, SQliteDB.NOMBRE_JUGADOR + "=?",
-						new String[] { j.getNombre() });
-			} else {
-				int ganador = 0, ko = 0;
-				if (j.isGanador()) {
-					ganador = 1;
-				}
-				if (j.isKO()) {
-					ko = 1;
-				}
-				db.execSQL("INSERT into estadisticas values ('" + j.getNombre()
-						+ "' , '" + 1 + "' , '" + ganador + "' , '" + ko
-						+ "' , '" + j.getNbebe() + "');");
 			}
 
 		} catch (Exception e) {
@@ -216,7 +214,7 @@ public class DrinkView extends Activity {
 					Toast.LENGTH_LONG).show();
 		}
 
-		db.close();
+		sqlitedb.close();
 	}
 
 	@Override

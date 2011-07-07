@@ -42,8 +42,10 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteQueryBuilder;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -87,6 +89,7 @@ public class ListadoInicial extends Activity {
 	private String DIRECTORY_NAME = "/mnt/sdcard/andrink/";
 	Dialog dialogo;
 	int num_jug = 0;
+	SQliteDB sqlitedb = new SQliteDB(this);
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -94,13 +97,16 @@ public class ListadoInicial extends Activity {
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		// setContentView(R.layout.listadoinicial);
 		setContentView(R.layout.pre_listado_inicial);
-		findViewById(R.id.pregodrink).setOnClickListener(new OnClickListener() {
+
+		findViewById(R.id.forward).setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
 				if (Integer.parseInt(((EditText) findViewById(R.id.num_jug))
-						.getText().toString()) > 0) {
+						.getText().toString()) > 0
+						&& !((EditText) findViewById(R.id.num_jug)).getText()
+								.toString().equals("")) {
 					SharedPreferences settings = getSharedPreferences("datos",
 							MODE_PRIVATE);
 					SharedPreferences.Editor editor = settings.edit();
@@ -359,36 +365,39 @@ public class ListadoInicial extends Activity {
 	}
 
 	private void insertarJugador(Jugador j) {
-		SQliteDB sqlitedb = new SQliteDB(this);
-		SQLiteDatabase db = sqlitedb.getReadableDatabase();
-		String id = j.getNombre();
-		String sentenciaSelect = "SELECT  nombreJugador as name, vecesJugadas as vecesjugadas, vecesGanadas as vecesganadas, vecesKO"
-				+ " as vecesko,vecesBebidas as vecesbebidas FROM estadisticas where nombreJugador like '"
-				+ id + "';";
+
 		int vecesbebidas, vecesJugadas, vecesKO, vecesGanadas;
 		try {
-			Cursor c = db.rawQuery(sentenciaSelect, null);
-			int a = c.getCount();
-			if (a == 1) {
-				c.moveToFirst();
+			String selection = sqlitedb.NOMBRE_JUGADOR + " like '"
+					+ j.getNombre() + "' ;";
+			// String[] selectionArgs = new String[] { j.getNombre() };
+			SQLiteQueryBuilder builder = new SQLiteQueryBuilder();
+			builder.setTables(sqlitedb.TABLE_NAME);
+			String[] columns = new String[] { sqlitedb.NOMBRE_JUGADOR };
+			Cursor c = sqlitedb.query(j.getNombre(),
+					new String[] { sqlitedb.NOMBRE_JUGADOR });
 
-				vecesJugadas = Integer.parseInt(c.getString(c
-						.getColumnIndex("vecesjugadas")));
+			if (c != null) {
+				int a = c.getCount();
+				if (a == 1) {
+					c.moveToFirst();
 
-				db.close();
-				db = sqlitedb.getWritableDatabase();
-				ContentValues cv = new ContentValues();
-				cv.put(SQliteDB.NOMBRE_JUGADOR, j.getNombre());
+					vecesJugadas = Integer.parseInt(c.getString(c
+							.getColumnIndex("vecesjugadas")));
+					ContentValues cv = new ContentValues();
+					cv.put(sqlitedb.NOMBRE_JUGADOR, j.getNombre());
+					cv.put(sqlitedb.VECES_JUGADAS, String
+							.valueOf((vecesJugadas + 1)));
+					sqlitedb.actualizarJugador(j.getNombre(), cv);
 
-				cv.put(SQliteDB.VECES_JUGADAS, String
-						.valueOf((vecesJugadas + 1)));
-
-				db.update("estadisticas", cv, SQliteDB.NOMBRE_JUGADOR + "=?",
-						new String[] { j.getNombre() });
-			} else {
-				db.execSQL("INSERT into estadisticas values ('" + j.getNombre()
-						+ "' , '" + 1 + "' , '" + 0 + "' , '" + 0 + "' , '"
-						+ j.getNbebe() + "');");
+				} else {
+					sqlitedb.addJugador(j.getNombre(), String.valueOf(j.getNbebe()));
+					/*
+					 * db.execSQL("INSERT into estadisticas values ('" +
+					 * j.getNombre() + "' , '" + 1 + "' , '" + 0 + "' , '" + 0 +
+					 * "' , '" + j.getNbebe() + "');");
+					 */
+				}
 			}
 
 		} catch (Exception e) {
@@ -396,7 +405,7 @@ public class ListadoInicial extends Activity {
 					Toast.LENGTH_LONG).show();
 		}
 
-		db.close();
+		sqlitedb.close();
 	}
 
 	@Override
@@ -415,10 +424,9 @@ public class ListadoInicial extends Activity {
 			/**
 			 * Iniciamos que vea la tabla o grafica con sus valores
 			 */
-			SQliteDB sqlitedb = new SQliteDB(this);
-			SQLiteDatabase db = sqlitedb.getWritableDatabase();
+
 			try {
-				sqlitedb.onUpgrade(db, 0, 0);
+				sqlitedb.onUpgrade(sqlitedb, 0, 0);
 			} catch (Exception e) {
 				Toast.makeText(getApplicationContext(), e.toString(),
 						Toast.LENGTH_SHORT).show();
