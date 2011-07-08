@@ -63,7 +63,7 @@ import android.widget.Toast;
 
 public class SQliteDB {
 	/** Called when the activity is first created. */
-	private static final String DATABASE_NAME = "pychupitos";
+	private static final String DATABASE_NAME = "andrink.db";
 	public final static String NOMBRE_JUGADOR = "nombreJugador";
 	public final static String VECES_JUGADAS = "vecesJugadas";
 	public static final String VECES_GANADAS = "vecesGanadas";
@@ -110,9 +110,7 @@ public class SQliteDB {
 				VECES_GANADAS, VECES_KO, VECES_BEBIDAS });
 	}
 
-	public long addJugador(String nombreJ, String veces_bebidas) {
-		return mDatabase.addJugador(nombreJ, veces_bebidas);
-	}
+	
 
 	public int actualizarJugador(String nombre, ContentValues cv) {
 		return mDatabase.actualizarJugador(nombre, cv);
@@ -169,27 +167,60 @@ public class SQliteDB {
 		 * mechanism by which the ContentProvider does not need to know the real
 		 * column names
 		 */
+		Cursor cursor = null;
 		String selection;
 		if (!nombreJ.equals("*")) {
 			selection = SQliteDB.NOMBRE_JUGADOR + " like " + " '" + nombreJ
 					+ "';";
-		} else {
-			selection = SQliteDB.NOMBRE_JUGADOR;
-		}
-		try {
-			Cursor cursor = mDatabase.getReadableDatabase().query(TABLE_NAME,
-					columns, selection, null, null, null, null);
-			if (cursor == null) {
-				return null;
-			} else if (!cursor.moveToFirst()) {
-				cursor.close();
-				return cursor;
+			try {
+				cursor = mDatabase.getReadableDatabase().query(
+						TABLE_NAME, columns, selection, null, null, null, null);
+				if (cursor == null) {
+					return null;
+				} else if (!cursor.moveToFirst()) {
+					cursor.close();
+					return null;
+				}
+			} catch (Exception e) {
+				Toast.makeText(mcontext, e.getMessage(), Toast.LENGTH_LONG)
+						.show();
 			}
-		} catch (Exception e) {
-			Toast.makeText(mcontext, e.getMessage(), Toast.LENGTH_LONG).show();
+		} else {
+			try {
+				cursor = mDatabase.getReadableDatabase().query(
+						TABLE_NAME, columns, null, null, null, null, null);
+				if (cursor == null) {
+					return null;
+				} else if (!cursor.moveToFirst()) {
+					cursor.close();
+					return null;
+				}
+			} catch (Exception e) {
+				Toast.makeText(mcontext, e.getMessage(), Toast.LENGTH_LONG)
+						.show();
+			}
+
 		}
 
-		return null;
+		return cursor;
+	}
+	
+	
+	public long addJugador(String nombre_jug, String veces_bebidas) {
+		return addJugador(nombre_jug, 1, 0, 0, veces_bebidas);
+	}
+
+	private long addJugador(String nombreJug, int i, int j, int k,
+			String vecesBebidas) {
+		// TODO Auto-generated method stub
+		ContentValues initialValues = new ContentValues();
+		initialValues.put(NOMBRE_JUGADOR, nombreJug);
+		initialValues.put(VECES_JUGADAS, i);
+		initialValues.put(VECES_GANADAS, j);
+		initialValues.put(VECES_KO, k);
+		initialValues.put(VECES_BEBIDAS, vecesBebidas);
+		return mDatabase.insert(TABLE_NAME, null,
+				initialValues);
 	}
 
 	public class BBDD extends SQLiteOpenHelper {
@@ -225,22 +256,7 @@ public class SQliteDB {
 			}
 		}
 
-		public long addJugador(String nombre_jug, String veces_bebidas) {
-			return addJugador(nombre_jug, 1, 0, 0, veces_bebidas);
-		}
-
-		private long addJugador(String nombreJug, int i, int j, int k,
-				String vecesBebidas) {
-			// TODO Auto-generated method stub
-			ContentValues initialValues = new ContentValues();
-			initialValues.put(NOMBRE_JUGADOR, nombreJug);
-			initialValues.put(VECES_JUGADAS, i);
-			initialValues.put(VECES_GANADAS, j);
-			initialValues.put(VECES_KO, k);
-			initialValues.put(VECES_BEBIDAS, vecesBebidas);
-			return this.getWritableDatabase().insert(TABLE_NAME, null,
-					initialValues);
-		}
+		
 
 		public Cursor searchJugador(String nombre) {
 

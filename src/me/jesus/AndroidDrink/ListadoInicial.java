@@ -391,7 +391,10 @@ public class ListadoInicial extends Activity {
 					sqlitedb.actualizarJugador(j.getNombre(), cv);
 
 				} else {
-					sqlitedb.addJugador(j.getNombre(), String.valueOf(j.getNbebe()));
+					long res = sqlitedb.addJugador(j.getNombre(), String.valueOf(j.getNbebe()));
+					if(res==-1){
+						Toast.makeText(getApplicationContext(), "hubo un error insertando el jugador en la base de datos", Toast.LENGTH_LONG).show();
+					}
 					/*
 					 * db.execSQL("INSERT into estadisticas values ('" +
 					 * j.getNombre() + "' , '" + 1 + "' , '" + 0 + "' , '" + 0 +

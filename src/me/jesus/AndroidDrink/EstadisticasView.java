@@ -92,10 +92,11 @@ public class EstadisticasView extends Activity {
 			String[] columns = new String[] { sqlitedb.NOMBRE_JUGADOR,
 					sqlitedb.VECES_JUGADAS, sqlitedb.VECES_GANADAS,
 					sqlitedb.VECES_KO, sqlitedb.VECES_BEBIDAS };
-			cursor = sqlitedb.query(selection, columns);
+			
 
 			try {
-				//cursor = sqlitedb.query(selection, columns, selectionArgs);
+				
+				cursor = sqlitedb.query("*", columns);
 				if (cursor != null) {
 					cursor.moveToFirst();
 				}
