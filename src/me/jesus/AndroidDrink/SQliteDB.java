@@ -113,7 +113,8 @@ public class SQliteDB {
 	
 
 	public int actualizarJugador(String nombre, ContentValues cv) {
-		return mDatabase.actualizarJugador(nombre, cv);
+		return mDatabase.getWritableDatabase().update("estadisticas", cv,
+				SQliteDB.NOMBRE_JUGADOR + "=?", new String[] { nombre });
 	}
 
 	/**
@@ -170,8 +171,8 @@ public class SQliteDB {
 		Cursor cursor = null;
 		String selection;
 		if (!nombreJ.equals("*")) {
-			selection = SQliteDB.NOMBRE_JUGADOR + " like " + " '" + nombreJ
-					+ "';";
+			selection = SQliteDB.NOMBRE_JUGADOR + " like  ' " + nombreJ
+					+ " ' ;";
 			try {
 				cursor = mDatabase.getReadableDatabase().query(
 						TABLE_NAME, columns, selection, null, null, null, null);
@@ -179,11 +180,12 @@ public class SQliteDB {
 					return null;
 				} else if (!cursor.moveToFirst()) {
 					cursor.close();
-					return null;
+					return cursor;
 				}
 			} catch (Exception e) {
 				Toast.makeText(mcontext, e.getMessage(), Toast.LENGTH_LONG)
 						.show();
+				return null;
 			}
 		} else {
 			try {
@@ -193,11 +195,12 @@ public class SQliteDB {
 					return null;
 				} else if (!cursor.moveToFirst()) {
 					cursor.close();
-					return null;
+					return cursor;
 				}
 			} catch (Exception e) {
 				Toast.makeText(mcontext, e.getMessage(), Toast.LENGTH_LONG)
 						.show();
+				return null;
 			}
 
 		}

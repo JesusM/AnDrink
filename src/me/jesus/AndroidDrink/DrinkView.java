@@ -165,8 +165,8 @@ public class DrinkView extends Activity {
 			Cursor c = sqlitedb.getJugador(j.getNombre());
 			
 			if (c != null) {
-				vecesGanadas = c.getColumnIndex(c.getColumnName(2));
-				vecesKO = c.getColumnIndex(c.getColumnName(3));
+				vecesGanadas = Integer.parseInt(c.getString(2));
+				vecesKO =  Integer.parseInt(c.getString(3));
 				int a = c.getCount();
 				if (a > 0) {
 					c.moveToFirst();

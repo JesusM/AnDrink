@@ -83,22 +83,23 @@ public class EstadisticasView extends Activity {
 
 		public Top25Adapter(Activity context) {
 			this.c = context;
-			
+
 			sqlitedb = new SQliteDB(EstadisticasView.this);
-			
-			//String selection = sqlitedb.NOMBRE_JUGADOR + " = ?";
+
+			// String selection = sqlitedb.NOMBRE_JUGADOR + " = ?";
 			String selection = "*";
-			
+
 			String[] columns = new String[] { sqlitedb.NOMBRE_JUGADOR,
 					sqlitedb.VECES_JUGADAS, sqlitedb.VECES_GANADAS,
 					sqlitedb.VECES_KO, sqlitedb.VECES_BEBIDAS };
-			
 
 			try {
-				
+
 				cursor = sqlitedb.query("*", columns);
 				if (cursor != null) {
-					cursor.moveToFirst();
+					if (cursor.getCount() != -1) {
+						cursor.moveToFirst();
+					}
 				}
 			} catch (Exception e) {
 				Toast.makeText(getApplicationContext(), e.getMessage(),
@@ -110,10 +111,7 @@ public class EstadisticasView extends Activity {
 
 		@Override
 		public int getCount() {
-
-			int a = cursor.getCount();
-			// return cursor.getCount() + 1;
-			return a;
+			return cursor == null ? 0 : cursor.getCount();
 		}
 
 		@Override
@@ -131,70 +129,37 @@ public class EstadisticasView extends Activity {
 			LayoutInflater inflater = c.getLayoutInflater();
 			View item = null;
 			item = inflater.inflate(R.layout.list_element, null);
-			/*
-			 * if (arg0 == 0) {
-			 * 
-			 * ((TextView) item.findViewById(R.id.textviewlistelement1))
-			 * .setText("Nombre"); ((TextView)
-			 * item.findViewById(R.id.textviewlistelement1))
-			 * .setTextColor(Color.WHITE);
-			 * 
-			 * ((TextView) item.findViewById(R.id.textviewlistelement2))
-			 * .setTextColor(Color.WHITE);
-			 * 
-			 * ((TextView) item.findViewById(R.id.textviewlistelement3))
-			 * .setTextColor(Color.WHITE); ((TextView)
-			 * item.findViewById(R.id.textviewlistelement4))
-			 * .setTextColor(Color.WHITE); ((TextView)
-			 * item.findViewById(R.id.textviewlistelement5))
-			 * .setTextColor(Color.WHITE);
-			 * 
-			 * ((TextView) item.findViewById(R.id.textviewlistelement2))
-			 * .setText("Veces jugadas"); ((TextView)
-			 * item.findViewById(R.id.textviewlistelement3))
-			 * .setText("Veces ganadas"); ((TextView)
-			 * item.findViewById(R.id.textviewlistelement4)) .setText("KO");
-			 * ((TextView) item.findViewById(R.id.textviewlistelement5))
-			 * .setText("Nº tragos");
-			 * 
-			 * ((LinearLayout) item.findViewById(R.id.list_element_layout))
-			 * .setBackgroundColor(Color.DKGRAY);
-			 * 
-			 * } else {
-			 */
-			// int ind = arg0-1;
-
-			cursor.moveToPosition(arg0);
-			// cursor.move(ind);
-			String nombre;
-			int vecesbebidas, vecesJugadas, vecesKO, vecesGanadas;
-			try {
-				vecesbebidas = Integer.parseInt(cursor.getString(cursor
-						.getColumnIndex(cursor.getColumnName(4))));
-				vecesJugadas = Integer.parseInt(cursor.getString(cursor
-						.getColumnIndex(cursor.getColumnName(1))));
-				vecesKO = Integer.parseInt(cursor.getString(cursor
-						.getColumnIndex(cursor.getColumnName(3))));
-				vecesGanadas = Integer.parseInt(cursor.getString(cursor
-						.getColumnIndex(cursor.getColumnName(2))));
-				nombre = cursor.getString(cursor.getColumnIndex(cursor
-						.getColumnName(0)));
-				((TextView) item.findViewById(R.id.textviewlistelement1))
-						.setText(nombre);
-				((TextView) item.findViewById(R.id.textviewlistelement2))
-						.setText(vecesJugadas + "");
-				((TextView) item.findViewById(R.id.textviewlistelement3))
-						.setText(vecesGanadas + "");
-				((TextView) item.findViewById(R.id.textviewlistelement4))
-						.setText(vecesKO + "");
-				((TextView) item.findViewById(R.id.textviewlistelement5))
-						.setText(vecesbebidas + "");
-			} catch (Exception e) {
-				Toast.makeText(getApplicationContext(), e.getMessage(),
-						Toast.LENGTH_LONG).show();
+			if (cursor != null) {
+				cursor.moveToPosition(arg0);
+				// cursor.move(ind);
+				String nombre;
+				int vecesbebidas, vecesJugadas, vecesKO, vecesGanadas;
+				try {
+					vecesbebidas = Integer.parseInt(cursor.getString(cursor
+							.getColumnIndex(cursor.getColumnName(4))));
+					vecesJugadas = Integer.parseInt(cursor.getString(cursor
+							.getColumnIndex(cursor.getColumnName(1))));
+					vecesKO = Integer.parseInt(cursor.getString(cursor
+							.getColumnIndex(cursor.getColumnName(3))));
+					vecesGanadas = Integer.parseInt(cursor.getString(cursor
+							.getColumnIndex(cursor.getColumnName(2))));
+					nombre = cursor.getString(cursor.getColumnIndex(cursor
+							.getColumnName(0)));
+					((TextView) item.findViewById(R.id.textviewlistelement1))
+							.setText(nombre);
+					((TextView) item.findViewById(R.id.textviewlistelement2))
+							.setText(vecesJugadas + "");
+					((TextView) item.findViewById(R.id.textviewlistelement3))
+							.setText(vecesGanadas + "");
+					((TextView) item.findViewById(R.id.textviewlistelement4))
+							.setText(vecesKO + "");
+					((TextView) item.findViewById(R.id.textviewlistelement5))
+							.setText(vecesbebidas + "");
+				} catch (Exception e) {
+					Toast.makeText(getApplicationContext(), e.getMessage(),
+							Toast.LENGTH_LONG).show();
+				}
 			}
-
-			// }
 			return item;
 		}
 

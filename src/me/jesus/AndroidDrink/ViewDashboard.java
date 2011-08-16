@@ -43,7 +43,7 @@ public class ViewDashboard extends Activity{
 		}else{
 			((TextView)findViewById(R.id.estadoJuego)).setText("continuar partida");
 			SharedPreferences settings2 = getSharedPreferences("datos", MODE_PRIVATE);
-			String n_jug = settings2.getString("Njugadores", "-1");
+			String n_jug = settings2.getString("NJugadores", "-1");
 			if(!n_jug.equals("-1")){
 				((TextView)findViewById(R.id.label_header)).setText(n_jug+" jugando actualmente");
 			}else{
@@ -76,12 +76,12 @@ public class ViewDashboard extends Activity{
 			@Override
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
-				AlertDialog alertDialog = new AlertDialog.Builder(
-						ViewDashboard.this).create(); // Read
-				// Update
+				final AlertDialog alertDialog = new AlertDialog.Builder(
+						ViewDashboard.this).create();
+			
 				alertDialog.setTitle("AnDrink");
 				alertDialog
-						.setMessage("Autor: JesÃºs Manzano Camino\nmail: manzanocaminojesus@gmail.com\n" +
+						.setMessage("Autor: Jesús Manzano Camino\nmail: manzanocaminojesus@gmail.com\n" +
 								"twitter: jesus_manza");
 
 				alertDialog.setButton("Aceptar",
@@ -89,7 +89,7 @@ public class ViewDashboard extends Activity{
 							public void onClick(DialogInterface dialog,
 									int which) {
 
-								// here you can add functions
+								alertDialog.dismiss();
 
 							}
 						});

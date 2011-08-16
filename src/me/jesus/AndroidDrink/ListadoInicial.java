@@ -107,14 +107,7 @@ public class ListadoInicial extends Activity {
 						.getText().toString()) > 0
 						&& !((EditText) findViewById(R.id.num_jug)).getText()
 								.toString().equals("")) {
-					SharedPreferences settings = getSharedPreferences("datos",
-							MODE_PRIVATE);
-					SharedPreferences.Editor editor = settings.edit();
-
-					editor.putString("NJugadores",
-							((EditText) findViewById(R.id.num_jug)).getText()
-									.toString());
-					editor.commit();
+					
 					setContentView(R.layout.listadoinicial);
 					cargarInterfazListado();
 				}
@@ -151,6 +144,12 @@ public class ListadoInicial extends Activity {
 						for (int i = 0; i < Datos.jugadores.size(); i++) {
 							insertarJugador(Datos.jugadores.get(i));
 						}
+						
+						SharedPreferences.Editor editor = settings.edit();
+
+						editor.putString("NJugadores",
+								Datos.jugadores.size()+"");
+						editor.commit();
 						startActivity(new Intent(ListadoInicial.this,
 								DrinkView.class));
 						finish();

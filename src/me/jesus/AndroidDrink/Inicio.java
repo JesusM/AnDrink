@@ -43,31 +43,38 @@ public class Inicio extends Activity {
 		super.onCreate(savedInstanceState);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.main);
-		//Datos.jugadores.clear();
-		//Datos.jugadorModificando=null;
 		((Button) findViewById(R.id.Entrar))
 				.setOnClickListener(new OnClickListener() {
 
 					@Override
 					public void onClick(View arg0) {
 						// TODO Auto-generated method stub
-						if (!(((EditText) findViewById(R.id.num_players))
-								.getText().toString().equals("") || Integer
-								.parseInt(((EditText) findViewById(R.id.num_players))
-										.getText().toString())<=1)) {
-							SharedPreferences settings = getSharedPreferences(
-									"datos", MODE_PRIVATE);
-							SharedPreferences.Editor editor = settings.edit();
+						if (!((EditText) findViewById(R.id.num_players))
+								.getText().toString().equals("")) {
+							if (Integer
+									.parseInt(((EditText) findViewById(R.id.num_players))
+											.getText().toString()) <= 1) {
+								SharedPreferences settings = getSharedPreferences(
+										"datos", MODE_PRIVATE);
+								SharedPreferences.Editor editor = settings
+										.edit();
 
-							editor.putString("NJugadores",
-									((EditText) findViewById(R.id.num_players))
-											.getText().toString());
-							editor.commit();
-							if(Datos.jugadores!=null)
-								Datos.jugadores=null;
-							startActivity(new Intent(Inicio.this,
-									ListadoInicial.class));
-							finish();
+								editor
+										.putString(
+												"NJugadores",
+												((EditText) findViewById(R.id.num_players))
+														.getText().toString());
+								editor.commit();
+								if (Datos.jugadores != null)
+									Datos.jugadores = null;
+								startActivity(new Intent(Inicio.this,
+										ListadoInicial.class));
+								finish();
+							}else{
+								Toast.makeText(getApplicationContext(),
+										"Debes elegir un nª de jugadores",
+										Toast.LENGTH_LONG).show();
+							}
 						} else {
 							Toast.makeText(getApplicationContext(),
 									"Debes elegir un nª de jugadores",
