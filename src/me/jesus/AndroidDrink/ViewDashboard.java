@@ -34,9 +34,9 @@ public class ViewDashboard extends Activity{
 		if(estado.equals("nuevo")){
 			((TextView)findViewById(R.id.estadoJuego)).setText("Comenzar partida");
 			((TextView)findViewById(R.id.label_header)).setText("Ninguna partida en juego");
-			SharedPreferences settings1 = getSharedPreferences(
-					"datos", MODE_PRIVATE);
-			SharedPreferences.Editor editor = settings1.edit();
+//			SharedPreferences settings1 = getSharedPreferences(
+//					"datos", MODE_PRIVATE);
+			SharedPreferences.Editor editor = settings.edit();
 
 			editor.putString("Estado","en juego");
 			editor.commit();
@@ -81,7 +81,7 @@ public class ViewDashboard extends Activity{
 			
 				alertDialog.setTitle("AnDrink");
 				alertDialog
-						.setMessage("Autor: Jesús Manzano Camino\nmail: manzanocaminojesus@gmail.com\n" +
+						.setMessage("Autor: Jesï¿½s Manzano Camino\nmail: manzanocaminojesus@gmail.com\n" +
 								"twitter: jesus_manza");
 
 				alertDialog.setButton("Aceptar",

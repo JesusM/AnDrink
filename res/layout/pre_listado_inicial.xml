@@ -10,14 +10,14 @@
 		<ImageView android:layout_width="wrap_content" android:id="@+id/forward"
 			android:layout_marginTop="4dip" android:layout_alignParentRight="true"
 			android:layout_height="wrap_content" android:src="@drawable/forward"
-			android:layout_centerInParent="true" />
+			android:layout_centerInParent="true" android:layout_marginRight="6dip"/>
 		<EditText android:layout_alignParentLeft="true"
 			android:layout_marginLeft="4dip" android:id="@+id/num_jug"
-			android:layout_toLeftOf="@id/forward" android:layout_toRightOf="@id/titulolistado"
+			android:layout_toLeftOf="@id/forward" 
 			android:layout_width="fill_parent" android:layout_height="wrap_content"
-			android:hint="nº jugadores" android:layout_centerInParent="true"
+			android:hint="nº jugadores" android:layout_centerVertical="true"
 			android:gravity="center" android:layout_marginRight="6dip"
-			android:numeric="integer" />
+			android:numeric="integer" android:layout_marginTop="12dip"/>
 
 
 	</RelativeLayout>

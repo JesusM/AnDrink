@@ -90,24 +90,30 @@ public class ListadoInicial extends Activity {
 	Dialog dialogo;
 	int num_jug = 0;
 	SQliteDB sqlitedb = new SQliteDB(this);
-
+	SharedPreferences settings ;
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		// setContentView(R.layout.listadoinicial);
 		setContentView(R.layout.pre_listado_inicial);
-
+		settings =  getSharedPreferences("datos", MODE_PRIVATE);
 		findViewById(R.id.forward).setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
+				String a = ((EditText) findViewById(R.id.num_jug)).getText()
+				.toString();
 				if (Integer.parseInt(((EditText) findViewById(R.id.num_jug))
 						.getText().toString()) > 0
 						&& !((EditText) findViewById(R.id.num_jug)).getText()
 								.toString().equals("")) {
-					
+					SharedPreferences.Editor editor = settings.edit();
+
+					editor.putString("NJugadores",
+							((EditText)findViewById(R.id.num_jug)).getText().toString());
+					editor.commit();
 					setContentView(R.layout.listadoinicial);
 					cargarInterfazListado();
 				}
@@ -145,11 +151,7 @@ public class ListadoInicial extends Activity {
 							insertarJugador(Datos.jugadores.get(i));
 						}
 						
-						SharedPreferences.Editor editor = settings.edit();
-
-						editor.putString("NJugadores",
-								Datos.jugadores.size()+"");
-						editor.commit();
+						
 						startActivity(new Intent(ListadoInicial.this,
 								DrinkView.class));
 						finish();
@@ -314,7 +316,7 @@ public class ListadoInicial extends Activity {
 
 	private void crearJugadores() {
 		// TODO Auto-generated method stub
-		SharedPreferences settings = getSharedPreferences("datos", MODE_PRIVATE);
+		
 		String b = settings.getString("NJugadores", "0");
 		int njug = Integer.parseInt(b);
 		// Datos.jugadores.clear();
